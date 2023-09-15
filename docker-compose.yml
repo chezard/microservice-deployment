@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+
+  order-service:
+    build:
+      context: ./order-service
+    ports:
+      - '9081:8080'
+    container_name: order-service
+
+  shipping-service:
+    build:
+      context: ./shipping-service
+    ports:
+      - '9082:8080'
+    container_name: shipping-service
