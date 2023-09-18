@@ -1,16 +1,15 @@
-FROM openjdk:19 AS BUILD
+FROM gradle:8.2.1 AS BUILD
+WORKDIR /app
 
-COPY settings.gradle.kts build.gradle.kts gradlew ./
-COPY gradle gradle
+COPY build.gradle.kts settings.gradle.kts /app/
 
-RUN microdnf install findutils
-
-RUN ./gradlew dependencies --refresh-dependencies
+RUN gradle wrapper
+RUN gradle dependencies --refresh-dependencies
 
 COPY src src
-RUN ./gradlew bootJar jar -DskipTests
+
+RUN gradle bootJar jar -DskipTests
 
 FROM openjdk:19-alpine
-WORKDIR app
-COPY --from=BUILD build/libs/*.jar app.jar
+COPY --from=BUILD /app/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar","app.jar"]
