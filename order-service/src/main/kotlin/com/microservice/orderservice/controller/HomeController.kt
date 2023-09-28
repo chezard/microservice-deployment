@@ -15,9 +15,8 @@ class HomeController(val homeService: HomeService) : BaseController() {
 
     @GetMapping("/post")
     fun post(): String {
-        val homeDto = HomeDto("s")
+        val homeDto = HomeDto("salammm")
         val user = getUser()
-        println(user)
         homeService.post(homeDto)
         return "OK"
     }

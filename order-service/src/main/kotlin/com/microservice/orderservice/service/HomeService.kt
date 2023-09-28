@@ -13,8 +13,9 @@ class HomeService {
     fun get() = "HomeService worked..."
 
     @ValidationAnnotation(name = "name")
-    fun post(@Valid homeDto: HomeDto) {
+    fun post(@Valid homeDto: HomeDto): String {
         println(homeDto)
+        return "Hello"
     }
 
 }
